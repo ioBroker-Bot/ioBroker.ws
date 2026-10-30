@@ -367,9 +367,7 @@ export class WsAdapter extends Adapter {
                 async (port: number): Promise<void> => {
                     if (parseInt(port as unknown as string, 10) !== this.config.port) {
                         this.log.error(`port ${this.config.port} already in use`);
-                        return this.terminate
-                            ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                            : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                        return this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                     }
 
                     this.server.app = express();
@@ -411,16 +409,12 @@ export class WsAdapter extends Adapter {
                         }
                     } catch (err) {
                         this.log.error(`Cannot create server: ${err}`);
-                        this.terminate
-                            ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                            : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                        this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                         return;
                     }
                     if (!this.server.server) {
                         this.log.error(`Cannot create server`);
-                        this.terminate
-                            ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                            : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                        this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                         return;
                     }
 
@@ -441,9 +435,7 @@ export class WsAdapter extends Adapter {
                             this.log.error(`Cannot start server on ${this.config.bind || '0.0.0.0'}:${port}: ${e}`);
                         }
                         if (!serverListening) {
-                            this.terminate
-                                ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                                : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                            this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                         }
                     });
 
@@ -479,9 +471,7 @@ export class WsAdapter extends Adapter {
             );
         } else {
             this.log.error('port missing');
-            this.terminate
-                ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+            this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
         }
     }
 

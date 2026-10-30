@@ -352,9 +352,7 @@ class WsAdapter extends adapter_core_1.Adapter {
             this.getPort(this.config.port, !this.config.bind || this.config.bind === '0.0.0.0' ? undefined : this.config.bind || undefined, async (port) => {
                 if (parseInt(port, 10) !== this.config.port) {
                     this.log.error(`port ${this.config.port} already in use`);
-                    return this.terminate
-                        ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                        : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                    return this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 }
                 this.server.app = (0, express_1.default)();
                 // Detect user
@@ -391,16 +389,12 @@ class WsAdapter extends adapter_core_1.Adapter {
                 }
                 catch (err) {
                     this.log.error(`Cannot create server: ${err}`);
-                    this.terminate
-                        ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                        : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                    this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                     return;
                 }
                 if (!this.server.server) {
                     this.log.error(`Cannot create server`);
-                    this.terminate
-                        ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                        : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                    this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                     return;
                 }
                 this.server.app.use((req, res) => {
@@ -418,9 +412,7 @@ class WsAdapter extends adapter_core_1.Adapter {
                         this.log.error(`Cannot start server on ${this.config.bind || '0.0.0.0'}:${port}: ${e}`);
                     }
                     if (!serverListening) {
-                        this.terminate
-                            ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                            : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                        this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                     }
                 });
                 // Start the web server
@@ -449,9 +441,7 @@ class WsAdapter extends adapter_core_1.Adapter {
         }
         else {
             this.log.error('port missing');
-            this.terminate
-                ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+            this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
         }
     }
     async main() {
